@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" >
+    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script>
+        function checkCharDigit(character) {
+            return (character >= '0' && character <= '9');
+        }
+        function clearDiv(id) {
+            document.getElementById(id).innerHTML = "";
+        }
+        function validate() {
+            clearDiv("firstNInvalid");
+            clearDiv("lastNInvalid");
+            clearDiv("emailInvalid");
+            clearDiv("passwordInvalid");
+            clearDiv("passwordConfirmInvalid");
+            var validateSuccess = true;
+            var firstName = document.signUpForm.first_name.value;
+            var lastName = document.signUpForm.last_name.value;
+            var emailInput = document.signUpForm.email.value;
+            var pass = document.signUpForm.password.value;
+            var passConfirm = document.signUpForm.password_confirm.value;
+            //validation
+            if(firstName == "") {
+                document.getElementById("firstNInvalid").innerHTML = "First name cannot be empty";
+                validateSuccess = false;
+            }
+            if(lastName == "") {
+                document.getElementById("lastNInvalid").innerHTML = "Last name cannot be empty";
+                validateSuccess = false;
+            }
+            if(emailInput == "") {
+                document.getElementById("emailInvalid").innerHTML = "Email cannot be empty";
+                validateSuccess = false;
+            }
+            if(pass == "") {
+                document.getElementById("passwordInvalid").innerHTML = "Password cannot be empty";
+                validateSuccess = false;
+            }
+            if(passConfirm == "") {
+                document.getElementById("passwordConfirmInvalid").innerHTML = "Password confirmation cannot be empty";
+                validateSuccess = false;
+            }
+            //verify password
+            if(pass != passConfirm) {
+                document.getElementById("passwordConfirmInvalid").innerHTML = "Passwords need to match";
+                validateSuccess = false;
+            }
+            return validateSuccess;
+        }
+    </script>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-light">
+    <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'member_site:index' %}"><img src="{% static 'img/logo.jpg' %}"></a>
+        </div>
+        <ul class="navbar-nav">
+            <li class="nav-item col-6"><a href="{% url 'member_site:index' %}">Home</a></li>
+        </ul>
+</nav>
+<div class="jumbotron-fluid" style="background-color:#E98E21;text-align:center">
+    <div class="container-fluid">
+        <br />
+        <h1>Sign Up</h1>
+        <br />
+    </div>
+
+</div>
+<br /><br />
+{% if messages %}
+    <div id="incorrect" class="alert-danger">
+    Please fix:
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    </div>
+    <br /><br />
+{% endif %}
+<div class="container-fluid" >
+    <form name="signUpForm" action="{% url 'member_site:process_signup' %}" method="post" onsubmit="return validate()">
+        {% csrf_token %}
+        <div id="firstNInvalid" class="alert-danger"></div>
+        <div class="form-group row">
+            <label for="firstn_input" style="text-align: right;" class="col-sm-2 col-form-label">First Name:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="first_name" id="firstn_input">
+            </div>
+        </div>
+        <div id="lastNInvalid" class="alert-danger"></div>
+        <div class="form-group row">
+            <label for="lastn_input" style="text-align: right;" class="col-sm-2 col-form-label">Last Name:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="last_name" id="lastn_input">
+            </div>
+        </div>
+        <div id="emailInvalid" class="alert-danger"></div>
+        <div class="form-group row">
+            <label for="email_input" style="text-align: right;" class="col-sm-2 col-form-label">Email Address:</label>
+            <div class="col-sm-4">
+                <input type="email" class="form-control" name="email" id="email_input">
+            </div>
+        </div>
+        <div id="passwordInvalid" class="alert-danger"></div>
+        <div class="form-group row">
+            <label for="password_input" style="text-align:right;" class="col-sm-2 col-form-label">Password:</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" id="password_input" name="password">
+            </div>
+        </div>
+        <div id="passwordConfirmInvalid" class="alert-danger"></div>
+        <div class="form-group row">
+            <label for="password_con_input" style="text-align:right;" class="col-sm-2 col-form-label">Password:</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" id="password_con_input" name="password_confirm">
+            </div>
+        </div>
+        <div id="codeInvalid" class="alert-danger"></div>
+        <div class="form-group row">
+            <label for="code_input" style="text-align:right;" class="col-sm-2 col-form-label">Verification Code:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="code_input" name="verif_code">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2" align="right">
+                <button type="reset" class="btn btn-outline-dark">Reset</button>
+            </div>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-primary">Sign up</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

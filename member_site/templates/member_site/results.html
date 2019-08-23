@@ -1,0 +1,46 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" >
+    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-light">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'member_site:home' %}"><img src="{% static 'img/logo.jpg' %}"></a>
+        </div>
+        <ul class="navbar-nav">
+            <li class="nav-item col-6"><a href="{% url 'member_site:home' %}">Home</a></li>
+            <li class="nav-item col-6"><a href="{% url 'member_site:logout' %}">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="jumbotron-fluid" style="background-color:#E98E21;text-align:center">
+    <div class="container-fluid">
+        <br />
+        <h1>Search Results</h1>
+        <br />
+    </div>
+</div>
+<div class="container-fluid">
+    {% if search_results %}
+    <div class="row">
+        {% for result in search_results %}
+            <div class="col-sm">
+                <img src="{% static 'img/' %}{{result.file_type}}.png" alt="icon" width="60" height="60" />
+                <a href="{% url 'member_site:details' name_display=result.name %}">{{ result.name }}</a>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>Sorry, no results returned. <a href="{% url 'member_site:home' %}">Search again?</a></p>
+    {% endif %}
+</div>
+</body>
+</html>
