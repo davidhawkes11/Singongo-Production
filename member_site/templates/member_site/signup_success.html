@@ -1,31 +1,11 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sign Up Successful</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" >
-    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
-    <script src="{% static 'js/bootstrap.js' %}"></script>
-</head>
-<body>
-<nav class="navbar navbar-expand-sm bg-light">
-    <div class="navbar-header">
-            <a class="navbar-brand" href="{% url 'member_site:index' %}"><img src="{% static 'img/logo.jpg' %}"></a>
-    </div>
-    <ul class="navbar-nav">
-        <li class="nav-item col-6"><a href="{% url 'member_site:index' %}">Home</a></li>
-    </ul>
-</nav>
-<div class="jumbotron-fluid" style="background-color:#E98E21;text-align:center">
-    <div class="container-fluid">
-        <br />
-        <h1>Sign-up Successful</h1>
-        <br />
-    </div>
-
+{% extends "member_site/base.html" %}
+{% block title %}Sign Up Successful{% endblock %}
+{% block links %}
+    <li class="nav-item col-6"><a href="{% url 'member_site:index' %}">Home</a></li>
+{% endblock %}
+{% block header %}Sign-up Successful{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    Please <a href="{% url 'member_site:index' %}">log in.</a>
 </div>
-<div class="container-fluid">Please <a href="{% url 'member_site:index' %}">log in.</a></div>
-</body>
-</html>
+{% endblock %}

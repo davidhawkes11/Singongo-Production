@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'm-_$gd$@-x%*0c#+sq+hj-dma_o$+0w-#!%%0m)k*8(ng4f#2^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -80,7 +80,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
         'USER': 'admin',
-        'PASSWORD': 'Singongo@2019',
+        'PASSWORD': 'singongo2019',
     }
 }
 

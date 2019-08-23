@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{%  block title %}Singongo{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" >
+    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'vendor/mediaelement/build/mediaelement-and-player.js' %}" ></script>
+    <link rel="stylesheet" href="{% static 'vendor/mediaelement/build/mediaelementplayer.css' %}" />
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-light" >
+    <div class="navbar-header text-center">
+            <a class="navbar-brand" href="{% url 'member_site:index' %}"><img src="{% static 'img/logo.jpg' %}" style="text-align:center"></a>
+    </div>
+    <ul class="navbar-nav">
+        {% block links %}
+        {%  endblock %}
+    </ul>
+</nav>
+<div class="jumbotron-fluid" style="background-color:#E98E21;text-align:center">
+    <div class="container-fluid">
+        <br />
+        <h1>{% block header %}Singongo{% endblock %}</h1>
+        <br />
+    </div>
+</div>
+{% block content %}
+{% endblock %}
+</body>
+</html>
