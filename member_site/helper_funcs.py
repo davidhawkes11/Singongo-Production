@@ -1,18 +1,10 @@
 from .models import FileRec
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordResetForm
 import os
 import time
 import datetime
 
-def checkIsDigit(character):
-    return character >= '0' and character <= '9'
-
-def test_upload():
-    new_file = FileRec(name='TestDoc', size=1000, format='pdf', date_added='2019-07-08', file_type='D')
-    new_file.save()
-    print('Success')
-
-import time
-import datetime
 def walk_dir(dir_path):
     counter = 0
     print(dir_path)
@@ -45,5 +37,15 @@ def walk_dir(dir_path):
                 new_file.save()
             counter += 1
     print('Saved {} files.'.format(counter))
-walk_dir('C://Users//Lloyd Warren//PycharmProjects//SingGongGo-Website//static//member_site')
 
+def create_users(file_name):
+    email_file = open(file_name, 'r')
+    emails = email_file.readlines()
+    for email in emails:
+        if email.__contains__('@') and email.__contains__('.'):
+            user = User.objects.create_user(username=email, password='orange&black', email=email)
+            user.save();
+            password_reset = PasswordResetForm({'email':email})
+            password_reset.save();
+        else:
+            print("Invalid email " + email)
