@@ -6,7 +6,7 @@ import datetime
 from datetime import date, datetime
 from django.template import RequestContext
 from os import path
-from .models import Verification, UserRec, AdminRec, SingerRec, FileRec
+from .models import FileRec
 from haystack.views import SearchView
 
 # Create your views here.
