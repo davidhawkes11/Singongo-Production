@@ -1,0 +1,38 @@
+{% extends "member_site/base.html" %}
+{% block title %}Singongo{% endblock %}
+{% block header %}Member Login{% endblock %}
+{% block content %}
+    {% if form.errors %}
+        <div class="container-fluid alert-danger">
+            Incorrect username and/or password. Please try again.
+        </div>
+    {% endif %}
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="form-group row">
+            <label style="text-align: right;" class="col-sm-2 col-form-label">{{ form.username.label_tag }}</label>
+            <div class="col-sm-4">
+                {{ form.username }}
+            </div>
+        </div>
+        <div class="form-group row">
+            <label style="text-align:right;" class="col-sm-2 col-form-label">{{ form.password.label_tag }}</label>
+            <div class="col-sm-4">{{ form.password }}</div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2" align="right">
+                <button type="reset" class="btn btn-outline-dark">Reset</button>
+            </div>
+            <div class="col-sm-2">
+                <input type="submit" value="Sign in" class="btn btn-primary" />
+                <input type="hidden" value="next" value="{{ next }}"/>
+            </div>
+        </div>
+        <div class="form-group row">
+        <div class="col-sm-2" align="right">
+            <a href="{% url 'password_reset' %}">Forgot Password?</a>
+        </div>
+    </div>
+    </form>
+
+{% endblock %}

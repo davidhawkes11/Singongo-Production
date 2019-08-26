@@ -31,7 +31,6 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -75,7 +74,7 @@ WSGI_APPLICATION = 'singongo.wsgi.application'
 
 DATABASES = {
     'default': {
-	'ENGINE': 'mysql.connector.django',
+	'ENGINE': 'django.db.backends.mysql',
         'NAME': 'singongo',
         'HOST': 'localhost',
         'PORT': '3306',
@@ -132,3 +131,11 @@ HAYSTACK_CONNECTIONS = {
 		'INDEX_NAME': 'haystack',
 	}
 }
+
+LOGIN_REDIRECT_URL = '/members/home'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'singongo328@gmail.com'
+EMAIL_HOST_PASSWORD = 'Singongo@2019'

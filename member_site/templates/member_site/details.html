@@ -1,8 +1,8 @@
 {% extends "member_site/base.html" %}
 {% block title %}{{ display_obj.name }}{% endblock %}
 {% block links %}
-    <li class="nav-item col-6"><a href="{% url 'member_site:home' %}">Home</a></li>
-    <li class="nav-item col-6"><a href="{% url 'member_site:logout' %}">Logout</a></li>
+    <li class="nav-item col-6"><a href="{% url 'member_site:haystack_search' %}">Home</a></li>
+    <li class="nav-item col-6"><a href="{% url 'logout' %}">Logout</a></li>
 {% endblock %}
 {% block header %}{{ display_obj.name }}{% endblock %}
 {% block content %}
@@ -17,7 +17,8 @@
     {% elif display_obj.file_type == 'audio' %}
         <audio type="audio/mp3" src="{% static ''|add:display_obj.location %}" class="mejs__player"></audio>
     {% elif display_obj.file_type == 'img' %}
-        <img src="{% static full_location %}"
+        <img src="{% static ''|add:display_obj.location %}" />
     {% endif %}
+    <a href="{% static ''|add:display_obj.location %}"><button type="button" class="btn btn-primary" value="Download">Download</button></a>
 </div>
 {% endblock %}

@@ -1,2 +1,5 @@
 #ignore static files
 static/
+
+#ignore venv
+env/

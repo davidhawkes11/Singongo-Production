@@ -7,9 +7,10 @@ from datetime import date, datetime
 from django.template import RequestContext
 from os import path
 from .models import Verification, UserRec, AdminRec, SingerRec, FileRec
+from haystack.views import SearchView
 
 # Create your views here.
-
+'''
 def index(request):
     return render(request, 'member_site/index.html')
 
@@ -104,34 +105,39 @@ def process_signup(request):
     return HttpResponseRedirect(reverse('member_site:signup_success'))
 
 def home(request):
-    if not 'logged_in_user' in request.session:
-        return HttpResponseRedirect(reverse('member_site:index'))
-    else:
+    if request.user.is_authenticated:
         return render(request, 'member_site/home.html')
+    else:
+        return HttpResponseRedirect(reverse('login'))
 
 def search(request):
-    if not 'logged_in_user' in request.session:
-        return HttpResponseRedirect(reverse('member_site:index'))
-    keyword_list = request.GET['keywords'].split()
-    files = FileRec.objects.filter(name__icontains=keyword_list[0])
-    for keyword in keyword_list[1:]:
-        #find keyword in any part of the file's record
-        files = files | FileRec.objects.filter(location__icontains=keyword)
-    files.order_by('name')
-    #return list of files to results view
-    return render(request, 'member_site/results.html', {'search_results': files.values()})
+    if request.user.is_authenticated:
+        keyword_list = request.GET['keywords'].split()
+        files = FileRec.objects.filter(name__icontains=keyword_list[0])
+        for keyword in keyword_list[1:]:
+            # find keyword in any part of the file's record
+            files = files | FileRec.objects.filter(location__icontains=keyword)
+        files.order_by('name')
+        # return list of files to results view
+        return render(request, 'member_site/results.html', {'search_results': files.values()})
+    else:
+        return HttpResponseRedirect(reverse('login'))
+'''
 
 def details(request, name_display):
-    if not 'logged_in_user' in request.session:
-        return HttpResponseRedirect(reverse('member_site:index'))
-    to_display = get_object_or_404(FileRec, name=name_display)
-    print(to_display)
-    #test resource - of exists at this location
-    if path.exists('/var/www/singongo.com/singongo/static/' + to_display.location):
-        return render(request, 'member_site/details.html', {'display_obj': to_display})
+    if request.user.is_authenticated:
+        to_display = get_object_or_404(FileRec, name=name_display)
+        print(to_display)
+        # test resource - of exists at this location
+        if path.exists('/var/www/singongo.com/singongo/static/' + to_display.location):
+            return render(request, 'member_site/details.html', {'display_obj': to_display})
+        else:
+            return HttpResponse('File does not exist')
     else:
-        return HttpResponse('File does not exist')
+        return HttpResponseRedirect(reverse('member_site:index'))
 
+
+'''
 def logout(request):
     if 'logged_in_user' in request.session:
         #clear session
@@ -142,4 +148,4 @@ def logout(request):
 
 def signup_success(request):
     return render(request, 'member_site/signup_success.html')
-
+'''

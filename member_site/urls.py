@@ -1,18 +1,14 @@
-from django.urls import path
+from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.conf.urls import url
+from haystack.views import SearchView, search_view_factory
+from haystack.forms import SearchForm
 
 from . import views
 
 app_name = 'member_site'
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('login', views.login, name='process_login'),
-    path('signup', views.sign_up, name='signup'),
-    path('process', views.process_signup, name='process_signup'),
-    path('home', views.home, name='home'),
-    path('search', views.search, name='search'),
+    url(r'^home/', search_view_factory(view_class=SearchView, template='search/search.html', form_class=SearchForm), name='haystack_search'),
     path(r'details/<name_display>', views.details, name='details'),
-    path('logout', views.logout, name='logout'),
-    path('signupsuccess', views.signup_success, name='signup_success'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

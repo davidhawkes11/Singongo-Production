@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
+from django.contrib.auth import views
 
 urlpatterns = [
-    path('', include('member_site.urls')),
-    url(r'^search/', include('haystack.urls')),
+    path('members/', include('member_site.urls')),
+    path('', views.LoginView.as_view(extra_context={'next':'member_site:home'}), name='login',),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
