@@ -19,6 +19,8 @@ def walk_dir(dir_path):
             month = datetime_mod.tm_mon
             date_mod = datetime.datetime(year, month, day)
             file_format = file.split('.')[1]
+            if file_format.__contains__('.'):
+                file_format = file_format.split('.')[1]
             print(file_format)
             f_type = ''
             valid = True
@@ -32,10 +34,11 @@ def walk_dir(dir_path):
                 f_type = 'img'
             else:
                 valid = False
+                print('invalid ' + file_format)
             if valid:
                 new_file = FileRec(name=f_name, location=str(file_path), size=f_size, format=file_format, date_added=date_mod, file_type=f_type)
                 new_file.save()
-            counter += 1
+                counter += 1
     print('Saved {} files.'.format(counter))
 
 def create_users(file_name):

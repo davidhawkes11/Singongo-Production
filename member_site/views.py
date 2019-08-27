@@ -1,7 +1,6 @@
 from django.shortcuts import render, reverse, render_to_response, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-from .helper_funcs import checkIsDigit
 import datetime
 from datetime import date, datetime
 from django.template import RequestContext
