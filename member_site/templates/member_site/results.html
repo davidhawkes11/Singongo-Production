@@ -1,0 +1,23 @@
+{% extend "members_site/base.html" %}
+{% block title %}Search Results{% endblock %}
+{% block links %}
+    <li class="nav-item col-6"><a href="{% url 'member_site:home' %}">Home</a></li>
+    <li class="nav-item col-6"><a href="{% url 'logout' %}">Logout</a></li>
+{% endblock %}
+{% block header %}Search Results{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    {% if search_results %}
+    <div class="row">
+        {% for result in search_results %}
+            <div class="col-sm">
+                <img src="{% static 'img/' %}{{result.file_type}}.png" alt="icon" width="60" height="60" />
+                <a href="{% url 'member_site:details' name_display=result.name %}">{{ result.name }}</a>
+            </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>Sorry, no results returned. <a href="{% url 'member_site:home' %}">Search again?</a></p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,6 +1,0 @@
-{{ object.name }}
-{{ object.location }}
-{{ object.size }}
-{{ object.format }}
-{{ object.date_added }}
-{{ object.file_type }}

@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles', 'haystack', 'member_site'
+    'django.contrib.staticfiles', 'member_site'
 ]
 
 MIDDLEWARE = [
@@ -53,7 +53,7 @@ ROOT_URLCONF = 'singongo.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,14 +123,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT=os.path.join(BASE_DIR, 'static')
 
-
-HAYSTACK_CONNECTIONS = {
-	'default': {
-		'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-		'URL': 'http://127.0.0.1:9200/',
-		'INDEX_NAME': 'haystack',
-	}
-}
 
 LOGIN_REDIRECT_URL = '/members/home'
 

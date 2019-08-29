@@ -1,12 +1,7 @@
-from django.shortcuts import render, reverse, render_to_response, get_object_or_404, redirect
-from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib import messages
-import datetime
-from datetime import date, datetime
-from django.template import RequestContext
+from django.shortcuts import render, reverse, get_object_or_404
+from django.http import HttpResponseRedirect
 from os import path
 from .models import FileRec
-from haystack.views import SearchView
 
 # Create your views here.
 '''
@@ -102,7 +97,7 @@ def process_signup(request):
         new_singer.save()
 
     return HttpResponseRedirect(reverse('member_site:signup_success'))
-
+'''
 def home(request):
     if request.user.is_authenticated:
         return render(request, 'member_site/home.html')
@@ -111,17 +106,15 @@ def home(request):
 
 def search(request):
     if request.user.is_authenticated:
-        keyword_list = request.GET['keywords'].split()
-        files = FileRec.objects.filter(name__icontains=keyword_list[0])
-        for keyword in keyword_list[1:]:
-            # find keyword in any part of the file's record
-            files = files | FileRec.objects.filter(location__icontains=keyword)
+        keywords = request.GET['keywords']
+        files = FileRec.objects.filter(name__icontains=keywords)
+        # find keyword in any part of the file's record
+        files = files | FileRec.objects.filter(location__icontains=keywords)
         files.order_by('name')
         # return list of files to results view
         return render(request, 'member_site/results.html', {'search_results': files.values()})
     else:
         return HttpResponseRedirect(reverse('login'))
-'''
 
 def details(request, name_display):
     if request.user.is_authenticated:
@@ -131,7 +124,7 @@ def details(request, name_display):
         if path.exists('/var/www/singongo.com/singongo/static/' + to_display.location):
             return render(request, 'member_site/details.html', {'display_obj': to_display})
         else:
-            return HttpResponse('File does not exist')
+            return HttpResponseRedirect(reverse('member_site:non_exist'))
     else:
         return HttpResponseRedirect(reverse('member_site:index'))
 
@@ -148,3 +141,6 @@ def logout(request):
 def signup_success(request):
     return render(request, 'member_site/signup_success.html')
 '''
+
+def file_not_found(request):
+    return render(request, 'member_site/non_existent_file.html')
