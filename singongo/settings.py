@@ -127,7 +127,8 @@ STATIC_ROOT=os.path.join(BASE_DIR, 'static')
 LOGIN_REDIRECT_URL = '/members/home'
 
 EMAIL_USE_TLS = True
+EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
+EMAIL_PORT = 443
 EMAIL_HOST_USER = 'singongo328@gmail.com'
 EMAIL_HOST_PASSWORD = 'Singongo@2019'

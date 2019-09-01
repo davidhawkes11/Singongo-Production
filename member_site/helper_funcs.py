@@ -4,6 +4,8 @@ from django.contrib.auth.forms import PasswordResetForm
 import os
 import time
 import datetime
+from django.template.loader import render_to_string
+from django.core import mail
 
 def walk_dir(dir_path):
     counter = 0
@@ -41,14 +43,20 @@ def walk_dir(dir_path):
                 counter += 1
     print('Saved {} files.'.format(counter))
 
+def send_welcome(user):
+    subject = 'Welcome to the Singongo Website! Your login details'
+    html_message = render_to_string('registration/welcome_email.html', {'user':user})
+    from_email = 'singongo328@gmail.com'
+    to = [user.email]
+    mail.send_mail(subject, html_message, from_email, to)
+
 def create_users(file_name):
     email_file = open(file_name, 'r')
     emails = email_file.readlines()
     for email in emails:
         if email.__contains__('@') and email.__contains__('.'):
-            user = User.objects.create_user(username=email, password='orange&black', email=email)
+            user = User.objects.create_user(username=email.split('@')[0], password='orange&black', email=email)
             user.save();
-            password_reset = PasswordResetForm({'email':email})
-            password_reset.save();
+            send_welcome(user)
         else:
             print("Invalid email " + email)
